@@ -28,6 +28,12 @@ class CreateUserForeignKeys extends Migration
             $table->foreignId('responder_id')->after('requester_id')->constrained('users','id');
             $table->foreignId('receivers_id')->after('responder_id')->constrained('roles','id');
         });
+
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->foreignId('notifier_id')->after('type_id')->constrained('users','id');
+            $table->foreignId('user_id')->after('notifier_id')->constrained('users','id');
+
+        });
     }
 
     /**

@@ -16,7 +16,7 @@ class Schedule extends BaseModel
 
     protected $table = 'schedules';
 
-    protected $fillable = ['date' ,'type' ,'type_id' ,'user_id'];
+    protected $fillable = ['date' ,'type' ,'total_minute' ,'type_id' ,'user_id'];
 
     protected $hidden = ['updated_at' ,'deleted_at'];
 
@@ -27,6 +27,7 @@ class Schedule extends BaseModel
     protected $casts = [
         'user_id' => 'integer',
         'type_id' => 'integer',
+        'total_minute' => 'integer',
     ];
 
     public function scheduleDetails()
