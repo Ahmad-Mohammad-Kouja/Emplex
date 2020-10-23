@@ -18,6 +18,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->date('date');
             $table->enum('type', ScheduleTypes::getValues())->default(ScheduleTypes::attend);
+            $table->unsignedBigInteger('total_minute')->default(0);
             $table->unsignedBigInteger('type_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
