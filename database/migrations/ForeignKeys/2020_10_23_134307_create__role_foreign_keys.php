@@ -13,12 +13,9 @@ class CreateRoleForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('responsibilities', function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained();
-        });
         Schema::table('responsibilities_roles', function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained();
-            $table->foreignId('responsibility')->constrained('responsibilities','id');
+            $table->foreignId('role_id')->after('id')->constrained();
+            $table->foreignId('responsibility_id')->after('role_id')->constrained('responsibilities','id');
         });
     }
 

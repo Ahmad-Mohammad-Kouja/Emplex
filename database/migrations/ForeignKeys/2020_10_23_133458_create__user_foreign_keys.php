@@ -14,8 +14,19 @@ class CreateUserForeignKeys extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('department_id')->constrained();
-            $table->foreignId('role_id')->constrained();
+            $table->foreignId('department_id')->after('bio')->constrained();
+            $table->foreignId('role_id')->after('department_id')->constrained();
+        });
+
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->foreignId('employee_id')->after('date')->constrained('users','id');
+            $table->foreignId('rater_id')->after('employee_id')->constrained('users','id');
+        });
+
+        Schema::table('requests', function (Blueprint $table) {
+            $table->foreignId('requester_id')->after('response')->constrained('users','id');
+            $table->foreignId('responder_id')->after('requester_id')->constrained('users','id');
+            $table->foreignId('receivers_id')->after('responder_id')->constrained('roles','id');
         });
     }
 

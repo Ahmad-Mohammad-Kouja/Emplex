@@ -14,7 +14,7 @@ class CreateCompanyForeignKeys extends Migration
     public function up()
     {
         Schema::table('departments', function (Blueprint $table) {
-            $table->foreignId('company_id')->constrained();
+            $table->foreignId('company_id')->after('logo')->constrained();
         });
     }
 
