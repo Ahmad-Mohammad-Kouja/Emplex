@@ -28,4 +28,9 @@ class Notification extends BaseModel
         'notifier_id' => 'integer',
     ];
 
+    public function notifier()
+    {
+        return $this->belongsTo(User::class,'notifier_id','id');
+    }
+
 }
