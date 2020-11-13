@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\HasApiTokens;
+use Roynex\InitialProjectPackage\Helpers\OperationalResult;
 use Roynex\InitialProjectPackage\Traits\ModelTrait;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable,SoftDeletes,ModelTrait;
+    use HasFactory, Notifiable ,SoftDeletes ,ModelTrait ,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -48,5 +51,20 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function login($data) : OperationalResult
+    {
+        $operationalResult = new OperationalResult();
+        $operationalResult->statues = 403;
+        $operationalResult->isSuccess = false;
+        if(Auth::attempt(['email' => $data['email'] , 'password' => $data['password']]))
+        {
+            $user = Auth::user();
+            $user['access_token'] = $user->createToken('Emplex')->accessToken;
+            $operationalResult->data = Auth::user();
+            $operationalResult->isSuccess = true;
+        }
+        return $operationalResult;
     }
 }

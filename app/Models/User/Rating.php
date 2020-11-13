@@ -2,7 +2,7 @@
 
 
 
-namespace App\Models\Schedule;
+namespace App\Models\User;
 
 use App\Enums\RequestStateTypes;
 use App\Models\User\User;
@@ -37,5 +37,11 @@ class Rating extends BaseModel
     public function rater()
     {
         return $this->belongsTo(User::class,'rater_id','id');
+    }
+
+    public function getUserRate($filter)
+    {
+        return $this->where($filter)
+                    ->avg('rate');
     }
 }
